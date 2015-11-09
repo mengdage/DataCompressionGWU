@@ -1,35 +1,39 @@
-function [ds, rs] = smquantizer(x, lv)
-    x = sort(x);
-    % lv = 4;
-    ds = zeros(lv+1,1);
-    rs = zeros(lv,1);
-    % deta = range(x)/lv;
-    deta = (ceil(max(x))-floor(min(x)))/lv;
+function [qx, ds, rs] = smquantizer(x, lv)
 
-    % set the interval values, d's.
-    for i = 1:(lv+1),
-        ds(i) = x(1)+(i-1)*deta;
+    numx = length(x);
+    
+    qx = x;
+    
+    [ds, rs] = semi_uniform(x, lv);
+    
+    % quantizer every element in x
+    for i = 1:numx,
+        % find:
+        %   false: the interval has not been found
+        %   true: the interval has been found
+        find = false;
+        % j: the index for d's
+        j = 2;
+        
+        % while: loop until the interval is found
+        while ~find,
+            if ds(j) > x(i),
+                find = true;
+            end
+            
+            % d(j) is the upper bound of the last interval
+            % x(i) is equal to the upper bound of the last interval
+            if (j == lv) && (ds(j) == x(i)),
+                find = true;
+            end
+            
+            if ~find,
+                j = j + 1;
+            end
+        end
+        qx(i) = j-1;
     end
     
-    % set the reconstruction values, r's.
-    sum = 0;
-    num = 0;
-    ir = 1;
-    for i = 1:length(x),
-        if (x(i) < ds(ir+1))||(x(i) == ds(lv+1)),
-            sum = sum+x(i);
-            num = num+1;
-        end
-
-        if i == length(x) || x(i+1) > ds(ir+1),
-            if sum == 0,
-                rs(ir) = (ds(ir) +ds(ir+1))/2;
-            else
-                rs(ir) = sum/num;
-            end
-            ir= ir + 1;
-            sum = 0;
-            num = 0;
-        end
-    end
+    
+    
 end

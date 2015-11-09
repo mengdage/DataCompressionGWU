@@ -1,10 +1,16 @@
 x=[0,0.65, 0.7, 0.7, 0.7, 0.9, 0.9, 1, 1, 1, 1, 1.2, 1.6, 1.8, 1.8, 1.74, 1.75, 1.9, 1.93, 1.94, 2.2, 2.2, 2.3, 2.35, 2.37, 2.5, 2.9];
-lv = 4;
+lv4 = 4;
 
-[d4lv r4lv] = MaxLloyd(x, lv);
-[qx4lv msex4lv] = MLQuantizer(x, d4lv, r4lv);
+[qx4lv, d4lv, r4lv] = MLQuantizer(x, lv4);
+[dx4lv] = MLDequantizer(qx4lv, r4lv);
+msex4lv = mean((dx4lv-x).^2)
 
-[d3lv r3lv] = MaxLloyd(x, 3);
-[qx3lv msex3lv] = MLQuantizer(x, d3lv, r3lv);
+lv3 = 3;
 
-[dsm4lv rsm4lv] = smquantizer(x, lv);
+[qx3lv, d3lv, r3lv] = MLQuantizer(x, lv3);
+[dx3lv] = MLDequantizer(qx3lv, r3lv);
+msex3lv = mean((dx3lv-x).^2)
+
+[smqx, smds,smrs]=smquantizer(x, lv4);
+[smdx] = smdequantizer(smqx, smrs);
+msexsm = mean((smdx - x).^2);

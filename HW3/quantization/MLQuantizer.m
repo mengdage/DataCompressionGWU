@@ -1,7 +1,11 @@
-function [qx msex] = MLQuantizer(x, d, r)
-    lv = length(d);
+function [qx, ds, rs] = MLQuantizer(x, lv)
+    
     numx = length(x);
+    % the quantized value of x
     qx = x;
+    % calculate the optimal decision levels d's and reconstruction levels
+    % r's
+    [ds,rs] = MaxLloyd(x, lv);
     
     % quantizer every element in x
     for i = 1:numx,
@@ -14,13 +18,13 @@ function [qx msex] = MLQuantizer(x, d, r)
         
         % while: loop until the interval is found
         while ~find,
-            if d(j) > x(i),
+            if ds(j) > x(i),
                 find = true;
             end
             
             % d(j) is the upper bound of the last interval
             % x(i) is equal to the upper bound of the last interval
-            if (j == lv) && (d(j) == x(i)),
+            if (j == lv) && (ds(j) == x(i)),
                 find = true;
             end
             
@@ -28,9 +32,8 @@ function [qx msex] = MLQuantizer(x, d, r)
                 j = j + 1;
             end
         end
-        
-        qx(i) = r(j-1);
+        qx(i) = j-1;
     end
     
-    msex = mean((qx-x).^2);
+    
 end
