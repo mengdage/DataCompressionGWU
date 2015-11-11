@@ -7,8 +7,8 @@ msex4lv = mean((dx4lv-x).^2)
 
 lv3 = 3;
 
-[qx3lv, d3lv, r3lv] = MLQuantizer(x, lv3);
-[dx3lv] = MLDequantizer(qx3lv, r3lv);
+[qx3lv, d3lv, r3lv] = uniformQuantizer(x, lv3);
+[dx3lv] = uniformDequantizer(qx3lv, r3lv);
 msex3lv = mean((dx3lv-x).^2)
 
 [smqx, smds,smrs]=smquantizer(x, lv4);
