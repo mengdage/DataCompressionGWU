@@ -1,5 +1,5 @@
 function [ds, rs] = uniform(x, lv)
-    x = double(x);
+
     ds = zeros(lv+1,1);
     rs = zeros(lv,1);
     
