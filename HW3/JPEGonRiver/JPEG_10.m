@@ -98,11 +98,11 @@ ZO = zeros(size(D));
 
 %% Dequantization & Inverse DCT
 % DC terms
-DC_prime = r_dc(DC_prime(:));
+DC_prime = r_dc(DC_prime);
 DC_prime = idct2(DC_prime);
 
 % AC terms
-AC_prime = r_ac(AC_prime(:));
+AC_prime = r_ac(AC_prime);
 AC_prime = idct2(AC_prime);
 
 %% Reconstruction
@@ -137,11 +137,12 @@ G_10_hat = size(G);
 count = 1;
 for i = 1: delta_x-1
     for j = 1: delta_y-1
-        G_10_hat([x(i): x(i+1)-1], [y(j): y(j+1)-1]) = ZO(:, :, count);
+        G_10_hat(x(i): x(i+1)-1, y(j): y(j+1)-1) = ZO(:, :, count);
         count = count + 1;
     end 
 end
-
+%%
+imshow(G_10_hat, [min(G_10_hat(:)), max(G_10_hat(:))])
 %% SNR
 RMSE = (sum((G(:)-G_10_hat(:)).^2))/(sum(G(:).^2));
 

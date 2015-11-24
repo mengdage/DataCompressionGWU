@@ -34,8 +34,8 @@ MLMSE = mean((MLdG(:)-double(G(:))).^2);
 MLSNR = 10*log10(sum(double(G(:)).^2) / sum((MLdG(:)-double(G(:))).^2));
 
 %%
-% show G and dequantized G
-figure,imshow(G);
-figure,imshow(uint8(unidG));
-figure, imshow(uint8(smdG));
-figure, imshow(uint8(MLdG));
+% show G and dequantized G's
+figure,imshow(G); title('original');
+figure,imshow(uint8(unidG));title('Uniform quantization');
+figure, imshow(uint8(smdG));title('Semi-uniform quantization');
+figure, imshow(uint8(MLdG));title('Max-Lloyd quantization');

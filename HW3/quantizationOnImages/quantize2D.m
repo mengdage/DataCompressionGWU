@@ -1,6 +1,7 @@
 function [qx] = quantize2D(x, ds)
     lv = length(ds)-1;
     sizeX = size(x);
+    qx = x;
     
     % quantizer every element in x
     for i = 1:sizeX(1),

@@ -28,20 +28,19 @@ iG1 = blockInvDCT(dG1);
 %figure, imshow(uint8(iG4));
 %figure, imshow(mat2gray(iG4));
 figure, imshow(iG4, [min(iG4(:)), max(iG4(:))]);
-snrG4 = snr(double(G), dG4-double(G));
-
+snrG4 = snr(double(G), iG4-double(G));
 
 %figure, imshow(uint8(iG3));
 figure, imshow(iG3, [min(iG3(:)), max(iG3(:))]);
-snrG3 = snr(double(G), dG3-double(G));
+snrG3 = snr(double(G), iG3-double(G));
 
 
 %figure, imshow(uint8(iG2));
 figure, imshow(iG2, [min(iG2(:)), max(iG2(:))]);
-snrG2 = snr(double(G), dG2-double(G));
+snrG2 = snr(double(G), iG2-double(G));
 
 
 %figure, imshow(uint8(iG1));
 %figure, imshow(mat2gray(iG1));
 figure, imshow(iG1, [min(iG1(:)), max(iG1(:))]);
-snrG1 = snr(double(G), dG1-double(G));
+snrG1 = snr(double(G), iG1-double(G));

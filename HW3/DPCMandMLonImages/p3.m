@@ -14,6 +14,7 @@ abcSet5 = [0.75, -0.5, 0.75];
 
 % residual images E's
 E1 = DPCM2D(G, abcSet1);
+%E1 = G;
 E2 = DPCM2D(G, abcSet2);
 E3 = DPCM2D(G, abcSet3);
 E4 = DPCM2D(G, abcSet4);
@@ -40,6 +41,7 @@ figure, imshow(E1,[min(E1(:)), max(E1(:))])
 % Max-Lloyd Quantization
 lv = 8;
 [qE1, ds, rs] = MLQuantizer(E1, lv);
+[qE3, ds3, rs3] = MLQuantizer(E3, lv);
 
 % RLE
 e = runLengthEncoder(qE1);
@@ -50,9 +52,12 @@ He = computeEntropy(te);
 %% Dequantization
 
 [dE1] = MLDequantizer(qE1, rs);
+[dE3] = MLDequantizer(qE3, rs3);
 
 %% 
 iG = invDPCM2D(dE1, abcSet1);
+iG3= invDPCM2D(dE3, abcSet3);
 
 iSNR = 10*log10( sum(double(G(:)).^2) / sum((iG(:)-double(G(:))).^2) );
 figure, imshow(mat2gray(iG));
+figure, imshow(mat2gray(iG3));
